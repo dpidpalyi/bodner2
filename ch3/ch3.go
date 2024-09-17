@@ -50,4 +50,32 @@ func main() {
 	fmt.Println(len(z), cap(z))
 	z = append(z, 50)
 	fmt.Println(len(z), cap(z))
+
+	s := []string{"a", "b", "c", "d"}
+	s1 := s[:2]
+	s2 := s[1:]
+	s3 := s[1:3]
+	s4 := s[:]
+	fmt.Println(s)
+	fmt.Println(s1)
+	fmt.Println(s2)
+	fmt.Println(s3)
+	fmt.Println(s4)
+
+	// taking slice from slice share memory
+	c1 := []int{1, 2, 3, 4}
+	c2 := c1[:2]
+	c3 := c1[1:3]
+	c3[0] = 100
+	fmt.Println(c1)
+	fmt.Println(c2)
+	fmt.Println(c3)
+
+	// copy 
+	xx := []int{1, 2, 3, 4}
+	yy := make([]int, 3)
+	num := copy(yy, xx)
+	fmt.Println(yy, num)
+	num = copy(yy, xx[2:])
+	fmt.Println(yy, num, len(yy), cap(yy))
 }
