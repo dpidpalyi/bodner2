@@ -95,4 +95,18 @@ func main() {
 	f2 := Adder.AddTo
 	fmt.Println(f2(myAdder, 20))
 	// One way to use them at dependency injection
+
+	// IOTA
+	// the best practice it to first define a type based on int
+	type MailCategory int
+	// next use a const block to define a set of values for your type
+	const (
+		Uncategorized MailCategory = iota // 0
+		Personal			  // 1
+		Spam				  // 2
+		Social				  // 3
+		Advertisements			  // 4
+	)
+	// NB!
+	// When new const block is created, iota is set back to 0
 }
