@@ -49,6 +49,15 @@ type Score int
 type Converter func(string) Score
 type TeamScores map[string]Score
 
+// METHODS ARE FUNCTIONS TOO
+type Adder struct {
+	start int
+}
+
+func (a Adder) AddTo(val int) int {
+	return a.start + val
+}
+
 func main() {
 	//var t = TeamScores{}
 	t := make(TeamScores)
@@ -72,4 +81,18 @@ func main() {
 
 	// The rulse for passing values to functions still apply to methods
 	// They call-by-value
+
+	// Methods like a functions
+	myAdder := Adder{start: 10}
+	fmt.Println(myAdder.AddTo(5))
+	type adder func(int) int
+	var f1 adder
+	// This is called a METHOD VALUE
+	f1 = myAdder.AddTo
+	fmt.Println(f1(10))
+	// You can create a function from the type itself
+	// This is called a METHOD EXPRESSION
+	f2 := Adder.AddTo
+	fmt.Println(f2(myAdder, 20))
+	// One way to use them at dependency injection
 }
