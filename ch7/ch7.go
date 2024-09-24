@@ -58,6 +58,38 @@ func (a Adder) AddTo(val int) int {
 	return a.start + val
 }
 
+// Use Embedding for Composition
+type Employee struct {
+	Name string
+	ID string
+}
+
+func (e Employee) Description() string {
+	return fmt.Sprintf("%s (%s)", e.Name, e.ID)
+}
+
+// We can embed any type within a struct, not just another struct
+type Manager struct {
+	Employee
+	Reports []Employee
+}
+
+func (m Manager) FindNewEmployees() []Employee {
+	return []Employee{}
+}
+
+// INTERFACES
+// If the method set for a concrete type contains all the methods in
+// the method set for an interface, the concrete type implements the
+// interface.
+type Stringer interface {
+	String() string
+}
+
+type Incrementer interface {
+	Increment()
+}
+
 func main() {
 	//var t = TeamScores{}
 	t := make(TeamScores)
@@ -109,4 +141,28 @@ func main() {
 	)
 	// NB!
 	// When new const block is created, iota is set back to 0
+
+	m := Manager{
+		Employee: Employee{
+			Name: "Bob Bobson",
+			ID: "12345",
+		},
+		Reports: []Employee{},
+	}
+	fmt.Println(m.ID)
+	fmt.Println(m.Description())
+
+	// INTERFACES
+	var myStringer fmt.Stringer
+	var myIncrementer Incrementer
+	pointerCounter := &Counter{}
+	valueCounter := Counter{}
+
+	myStringer = pointerCounter
+	myStringer = valueCounter
+	fmt.Println(myStringer.String())
+
+	//myIncrementer = pointerCounter
+	myIncrementer = valueCounter // COMPILE-TIME ERROR
+	fmt.Println(myIncrementer)
 }
