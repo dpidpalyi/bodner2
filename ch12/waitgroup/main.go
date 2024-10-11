@@ -1,0 +1,40 @@
+package main
+
+import (
+	"fmt"
+	"sync"
+	"time"
+)
+
+func main() {
+	var wg sync.WaitGroup
+	wg.Add(3)
+	go func() {
+		defer wg.Done()
+		doThing1()
+	}()
+	go func() {
+		defer wg.Done()
+		doThing2()
+	}()
+	go func() {
+		defer wg.Done()
+		doThing3()
+	}()
+	wg.Wait()
+}
+
+func doThing1() {
+	time.Sleep(time.Second)
+	fmt.Println("Thing 1 done!")
+}
+
+func doThing2() {
+	time.Sleep(time.Second * 2)
+	fmt.Println("Thing 2 done!")
+}
+
+func doThing3() {
+	time.Sleep(time.Second * 3)
+	fmt.Println("Thing 3 done!")
+}
